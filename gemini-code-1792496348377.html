@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kunal & Kareena — Royal Wedding Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --burgundy: #54121a;
+    --burgundy-light: #7b1d28;
+    --gold: #c59b48;
+    --gold-dark: #8c6b23;
+    --cream: #faf5ee;
+    --card-bg: #fdfbf7;
+    --text-primary: #3b2219;
+    --text-muted: #7d6b63;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: #1a080a;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-primary);
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+  }
+  .app-frame {
+    width: 100%;
+    max-width: 440px;
+    min-height: 100vh;
+    background: var(--cream);
+    position: relative;
+    box-shadow: 0 0 35px rgba(0,0,0,0.6);
+    overflow-x: hidden;
+  }
+  
+  /* COVER ENVELOPE MODAL */
+  #cover-screen {
+    position: fixed;
+    inset: 0;
+    max-width: 440px;
+    margin: 0 auto;
+    z-index: 100;
+    background: radial-gradient(circle at center, #7b1d28 0%, #3d0a10 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s;
+  }
+  .cover-card {
+    width: 85%;
+    background: #fdfaf5;
+    border-radius: 14px;
+    padding: 38px 24px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    border: 1px solid rgba(197, 155, 72, 0.4);
+  }
+  .seal {
+    width: 46px;
+    height: 46px;
+    background: var(--burgundy);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    font-size: 20px;
+  }
+  .cover-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 34px;
+    color: var(--burgundy);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .cover-date {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--gold-dark);
+    margin-bottom: 25px;
+  }
+  .btn-open {
+    background: var(--burgundy);
+    color: #fff;
+    border: none;
+    padding: 10px 34px;
+    border-radius: 25px;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(84, 18, 26, 0.4);
+  }
+
+  /* PALACE BACKGROUND & FLORALS */
+  .palace-hero {
+    position: relative;
+    width: 100%;
+    min-height: 380px;
+    background: url('https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 30px;
+  }
+  .palace-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(250,245,238,0.2) 0%, rgba(250,245,238,0.7) 70%, var(--cream) 100%);
+  }
+  .arch-frame {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+  .ganesha-icon {
+    width: 50px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+    margin-bottom: 10px;
+  }
+  .main-names {
+    font-family: 'Great Vibes', cursive;
+    font-size: 46px;
+    color: var(--burgundy);
+    line-height: 1.1;
+  }
+  .main-names span {
+    display: block;
+    font-size: 26px;
+    font-family: 'Cinzel', serif;
+    color: var(--gold-dark);
+  }
+
+  /* INVITATION CONTENT */
+  .section-card {
+    padding: 24px 20px;
+    text-align: center;
+    position: relative;
+  }
+  .ornament {
+    color: var(--gold);
+    font-size: 22px;
+    margin: 12px 0;
+  }
+  .subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--gold-dark);
+    margin-bottom: 10px;
+  }
+  .parents-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 18px 0;
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+  .parents-col strong {
+    color: var(--burgundy);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+  }
+  .announcement {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--burgundy);
+    margin: 20px 0 10px;
+  }
+
+  /* TIMELINE EVENTS */
+  .event-timeline {
+    padding: 10px 20px;
+  }
+  .event-item {
+    border-bottom: 1px dashed rgba(197, 155, 72, 0.4);
+    padding: 18px 0;
+    text-align: center;
+  }
+  .event-name {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    color: var(--burgundy);
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .event-venue {
+    font-size: 12px;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .event-meta {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 12px;
+    color: var(--gold-dark);
+    font-weight: 600;
+  }
+
+  /* COUNTDOWN */
+  .countdown-box {
+    margin: 25px 20px;
+    background: #fff;
+    border: 1px solid rgba(197, 155, 72, 0.3);
+    border-radius: 12px;
+    padding: 18px 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  }
+  .countdown-digits {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 12px;
+  }
+  .digit-unit { font-size: 10px; color: var(--text-muted); }
+  .digit-num { font-size: 20px; font-weight: 700; color: var(--burgundy); font-family: 'Cinzel', serif; }
+
+  /* MAP PREVIEW */
+  .map-box {
+    margin: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(197, 155, 72, 0.4);
+  }
+  .map-btn {
+    display: block;
+    background: var(--burgundy);
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  /* FLOATING AUDIO CONTROLLER */
+  .audio-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    background: var(--burgundy);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 50;
+  }
+</style>
+</head>
+<body>
+
+<div class="app-frame">
+
+  <!-- COVER ENVELOPE (Matches 00:00 - 00:02 of video) -->
+  <div id="cover-screen">
+    <div class="cover-card">
+      <div class="seal">❤</div>
+      <div class="cover-title">Kunal<br>&amp;<br>Kareena</div>
+      <div class="cover-date">NOVEMBER 17, 2026</div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Cordially Invites</p>
+      <button class="btn-open" onclick="unlockInvite()">OPEN</button>
+    </div>
+  </div>
+
+  <!-- FLOATING MUSIC BUTTON -->
+  <div class="audio-toggle" onclick="toggleAudio()" id="music-btn">🎵</div>
+  <audio id="bg-audio" loop src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b417c83f.mp3?filename=indian-flute-traditional-meditation-10905.mp3"></audio>
+
+  <!-- PALACE TOP HERO -->
+  <div class="palace-hero">
+    <div class="arch-frame">
+      <div style="font-size: 32px; color: var(--gold-dark); margin-bottom: 4px;">ॐ</div>
+      <div class="main-names">
+        Kunal
+        <span>&amp;</span>
+        Kareena
+      </div>
+    </div>
+  </div>
+
+  <!-- PARENTS SECTION -->
+  <div class="section-card">
+    <div class="subtitle">S/O &amp; D/O</div>
+    <div class="parents-grid">
+      <div class="parents-col">
+        <strong>Mr. &amp; Mrs.</strong>
+        GULRAJ T SHAHDADPURI<br>
+        LT SHRI ANJU G<br>
+        SHAHDADPURI
+      </div>
+      <div class="parents-col">
+        <strong>Mr. &amp; Mrs.</strong>
+        AMIT CHANDNANI<br>
+        KOMAL CHANDNANI
+      </div>
+    </div>
+    <div class="ornament">❖</div>
+    <div class="announcement">WE JOYFULLY ANNOUNCE THE WEDDING OF OUR CHILDREN</div>
+  </div>
+
+  <!-- TIMELINE OF CEREMONIES -->
+  <div class="event-timeline">
+    <div class="event-item">
+      <div class="event-name">GURU BHOG SAHEB</div>
+      <div class="event-venue">VENUE: AT RESIDENCE<br>345/B, SINDHI COLONY, SARDARNAGAR, AHMEDABAD</div>
+      <div class="event-meta">
+        <span>SUNDAY</span>
+        <span>15 NOV 2026</span>
+        <span>10:00 AM</span>
+      </div>
+    </div>
+
+    <div class="event-item">
+      <div class="event-name">PUJYA BEHRANA SAHEB</div>
+      <div class="event-venue">SHRI SHIVAM BANQUET<br>1st FLOOR, XPERIA COMPLEX, OPP BALAJI AGORA MALL, BHAT, AHMEDABAD</div>
+      <div class="event-meta">
+        <span>MONDAY</span>
+        <span>16 NOV 2026</span>
+        <span>07:00 PM</span>
+      </div>
+    </div>
+
+    <div class="event-item">
+      <div class="event-name">BARAAT</div>
+      <div class="event-venue">VENUE: AT RESIDENCE<br>345/B, SINDHI COLONY, SARDARNAGAR, AHMEDABAD</div>
+      <div class="event-meta">
+        <span>TUESDAY</span>
+        <span>17 NOV 2026</span>
+        <span>04:00 PM</span>
+      </div>
+    </div>
+
+    <div class="event-item">
+      <div class="event-name">WEDDING CEREMONY &amp; RECEPTION</div>
+      <div class="event-venue">AUREATE BANQUET<br>1st FLOOR, XPERIA COMPLEX, OPP BALAJI AGORA MALL, BHAT, AHMEDABAD</div>
+      <div class="event-meta">
+        <span>TUESDAY</span>
+        <span>17 NOV 2026</span>
+        <span>07:00 PM / 09:00 PM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALENDAR COUNTDOWN -->
+  <div class="countdown-box">
+    <div class="subtitle">COUNTDOWN TO CELEBRATION</div>
+    <div class="countdown-digits">
+      <div><span class="digit-num" id="d">00</span><br><span class="digit-unit">DAYS</span></div>
+      <div><span class="digit-num" id="h">00</span><br><span class="digit-unit">HOURS</span></div>
+      <div><span class="digit-num" id="m">00</span><br><span class="digit-unit">MINS</span></div>
+      <div><span class="digit-num" id="s">00</span><br><span class="digit-unit">SECS</span></div>
+    </div>
+  </div>
+
+  <!-- VENUE GOOGLE MAPS -->
+  <div class="map-box">
+    <iframe src="https://www.google.com/maps?q=Agora+Mall+Bhat+Circle+Ahmedabad&output=embed" width="100%" height="220" style="border:0;" loading="lazy"></iframe>
+    <a href="https://maps.google.com/?q=Aureate+Restaurant+And+Banquet+Agora+Mall+Ahmedabad" target="_blank" class="map-btn">OPEN IN GOOGLE MAPS</a>
+  </div>
+
+  <div style="text-align: center; padding: 25px 20px 60px; font-size: 13px; color: var(--gold-dark); font-style: italic;">
+    "Your presence would be the greatest gift we could receive!"
+  </div>
+
+</div>
+
+<script>
+  function unlockInvite() {
+    document.getElementById('cover-screen').style.opacity = '0';
+    setTimeout(() => { document.getElementById('cover-screen').style.display = 'none'; }, 800);
+    const audio = document.getElementById('bg-audio');
+    audio.play().catch(() => {});
+  }
+
+  function toggleAudio() {
+    const audio = document.getElementById('bg-audio');
+    if (audio.paused) {
+      audio.play();
+      document.getElementById('music-btn').innerText = '🎵';
+    } else {
+      audio.pause();
+      document.getElementById('music-btn').innerText = '🔇';
+    }
+  }
+
+  // Live countdown to Nov 17, 2026
+  const target = new Date("Nov 17, 2026 19:00:00").getTime();
+  setInterval(() => {
+    const now = new Date().getTime();
+    const diff = target - now;
+    if (diff > 0) {
+      document.getElementById("d").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+      document.getElementById("h").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      document.getElementById("m").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      document.getElementById("s").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+    }
+  }, 1000);
+</script>
+</body>
+</html>
